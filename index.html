@@ -480,9 +480,13 @@
     function clearScreenAndShowFinalMessage() {
         document.body.innerHTML = ""; // Clear all previous content
         const finalMessage = document.createElement("p");
-       finalMessage.innerHTML = 
+     finalMessage.innerHTML = 
     "2025年6月に<br>莉緒がお姉ちゃんになります。<br><br><br>" +
-    "ここまで見たら、<br>当選しました　とラインください";
+    "本件に関する情報は<br>親戚を含む第三者に<br>一切口外しないようお願いします。<br>" +
+    "ここまでご覧いただいたら、<br>「当選しました」とLINEでご連絡ください。<br><br><br>";
+
+   ;
+
         finalMessage.id = "final-message";
         document.body.appendChild(finalMessage);
     }
