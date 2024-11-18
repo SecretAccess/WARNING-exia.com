@@ -20,15 +20,17 @@
         50% { opacity: 0; }
         100% { opacity: 1; }
     }
-    #message, #final-message {
+    #message {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid #0f0;
+        padding: 10px;
         white-space: pre-wrap;
-        font-size: 16px;
-        line-height: 1.5;
     }
     #hacker-message {
         font-size: 24px;
         text-align: center;
-        margin-top: 50px;
+        margin-top: 20px;
         display: none;
     }
 </style>
@@ -36,77 +38,59 @@
 <body>
 
 <h1 id="alert" class="blinking">Your device has been hacked</h1>
-<p id="message"></p>
+<div id="message"></div>
 <p id="hacker-message">A message from the hacker has arrived.</p>
-<p id="final-message" class="hidden"></p>
 
 <script>
     // List of realistic personal data leak messages
-    const personalDataMessages = [  
-・ IP Address: 203.***.***.58  
-・ Location: Japan  
-・ Device: iPhone(iOS)  
-・ Username: ****  
-・ Email: private***@softbank.jp  
-・ Backup Email: ***@gmail.com  
-・ Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login, https://youtube.com/watch?v=***  
-・ Saved Passwords: 47 accounts (some compromised)  
-・ Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)  
-・ Debit Card Info: ****-****-****-**** (Exp: 09/25, JCB)  
-・ Bank Accounts Linked: **Mitsubishi UFJ**, **Mizuho**, **SMBC**  
-・ Call Log: Last call - +81 090-****-**** (Recent: Boss)  
-・ SMS Messages: Last message - "****************************"  
-・ Social Media: Logged in on LINE, Twitter (X),  Facebook  
-・ Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba  
-・ VPN Status: OFF (IP visible)  
-・ Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan,” “anonymous shopping sites”  
-・ Recent Photos: Last photo - Taken near Tokyo Tower, timestamped 10:23 AM  
-・ Calendar Events: “Dinner with client at Ginza,” “Doctor appointment tomorrow at 3 PM”  
-・ Smart Home Devices: Alexa and Google Nest linked (recent voice command: “Play relaxing music”)  
-・ Health App Data: Steps yesterday - 12,450, Heart rate - 82 bpm (resting), Sleep - 5 hours  
-・ Cloud Services: iCloud, Google Drive (Recent upload: “Tax documents.pdf”)  
-・ Frequent Flyer Program: ANA Mileage Club (Gold member)  
-・ Shopping App Usage: Amazon Japan, Rakuten Ichiba, Yahoo! Shopping (Recent order: "AirPods Pro")  
-・ Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video  
-・ Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza  
-・ Browser Extensions: Adblock, Grammarly, LastPass (last login: 2 days ago)  
-・ Wi-Fi Networks Connected: "Home_WiFi_5G," "Cafe_Free_WiFi," "Office_SecureNet"  
-・ Recent Downloads: “Free VPN app,” “Tokyo Metro map,” “Expense Tracker.xlsx”  
-・ Bluetooth Devices: Apple Watch, AirPods, Car Bluetooth (Connected: Nissan Leaf)  
-
+    const personalDataMessages = [
+        "IP Address: 203.***.***.58",
+        "Location: Japan",
+        "Device: iPhone (iOS)",
+        "Username: ****",
+        "Email: private***@softbank.jp",
+        "Backup Email: ***@gmail.com",
+        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
+        "Saved Passwords: 47 accounts (some compromised)",
+        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
+        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
+        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
+        "Social Media: Logged in on LINE, Twitter (X), Facebook",
+        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
+        "VPN Status: OFF (IP visible)",
+        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
+        "Recent Photos: Last photo taken near Tokyo Tower",
+        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
+        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
+        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
+        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
+        "Bluetooth Devices: Apple Watch, AirPods, Car Bluetooth"
     ];
 
-    // Final message text
-    const finalMessageText = "2025年6月に莉緒がお姉ちゃんになります。";
-
-    // Function to display personal data messages
+    // Function to display personal data messages at high speed
     function showScrollingMessages(index = 0) {
         if (index < personalDataMessages.length) {
             const messageElement = document.getElementById("message");
             messageElement.textContent += personalDataMessages[index] + "\n";
-            messageElement.scrollTop = messageElement.scrollHeight;
-            setTimeout(() => showScrollingMessages(index + 1), 400);
+            messageElement.scrollTop = messageElement.scrollHeight; // Auto-scroll to the bottom
+            setTimeout(() => showScrollingMessages(index + 1), 20); // High speed: 20ms interval
         } else {
             showHackerMessage();
         }
     }
 
-    // Function to display hacker message with a pop-up
+    // Function to display hacker message
     function showHackerMessage() {
-        alert("Hacker message received.");
         const hackerMessage = document.getElementById("hacker-message");
         hackerMessage.style.display = "block";
-        setTimeout(clearScreenAndShowFinalMessage, 3000);
+        setTimeout(clearScreenAndShowFinalMessage, 1000); // Short delay for effect
     }
 
-    // Function to clear the screen and show only the final message
+    // Function to clear the screen and show the final message
     function clearScreenAndShowFinalMessage() {
-        // Clear all previous content
-        document.body.innerHTML = "";
-        
-        // Create and display the final message
+        document.body.innerHTML = ""; // Clear all previous content
         const finalMessage = document.createElement("p");
-        finalMessage.textContent = finalMessageText;
+        finalMessage.textContent = "In June 2025, Rio will become a big sister.";
         finalMessage.style.fontSize = "24px";
         finalMessage.style.color = "#0f0";
         finalMessage.style.textAlign = "center";
