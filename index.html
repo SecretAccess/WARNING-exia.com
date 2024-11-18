@@ -27,11 +27,26 @@
         padding: 10px;
         white-space: pre-wrap;
     }
-    #hacker-message {
+    #hacker-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #111;
+        color: #0f0;
+        padding: 20px;
+        border: 2px solid #0f0;
+        font-size: 18px;
+        text-align: center;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.5s;
+        visibility: hidden;
+    }
+    #final-message {
         font-size: 24px;
         text-align: center;
-        margin-top: 20px;
-        display: none;
+        color: #0f0;
     }
 </style>
 </head>
@@ -39,7 +54,7 @@
 
 <h1 id="alert" class="blinking">Your device has been hacked</h1>
 <div id="message"></div>
-<p id="hacker-message">A message from the hacker has arrived.</p>
+<div id="hacker-popup">⚠️ A message from the hacker has arrived.</div>
 
 <script>
     // List of realistic personal data leak messages
@@ -65,7 +80,7 @@
         "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
         "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
         "Bluetooth Devices: Apple Watch, AirPods, Car Bluetooth"
-         "IP Address: 203.***.***.58",
+        "IP Address: 203.***.***.58",
         "Location: Japan",
         "Device: iPhone (iOS)",
         "Username: ****",
@@ -86,7 +101,7 @@
         "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
         "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
         "Bluetooth Devices: Apple Watch, AirPods, Car Bluetooth"
-  　　   "IP Address: 203.***.***.58",
+    "IP Address: 203.***.***.58",
         "Location: Japan",
         "Device: iPhone (iOS)",
         "Username: ****",
@@ -107,7 +122,7 @@
         "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
         "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
         "Bluetooth Devices: Apple Watch, AirPods, Car Bluetooth"
-     　　"IP Address: 203.***.***.58",
+    "IP Address: 203.***.***.58",
         "Location: Japan",
         "Device: iPhone (iOS)",
         "Username: ****",
@@ -128,28 +143,7 @@
         "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
         "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
         "Bluetooth Devices: Apple Watch, AirPods, Car Bluetooth"
-     　　"IP Address: 203.***.***.58",
-        "Location: Japan",
-        "Device: iPhone (iOS)",
-        "Username: ****",
-        "Email: private***@softbank.jp",
-        "Backup Email: ***@gmail.com",
-        "Recent Browsing History: https://***.rakuten.co.jp, https://***.mybank.co.jp/login",
-        "Saved Passwords: 47 accounts (some compromised)",
-        "Credit Card Info: ****-****-****-**** (Exp: 03/28, VISA)",
-        "Bank Accounts Linked: Mitsubishi UFJ, Mizuho, SMBC",
-        "Call Log: Last call - +81 090-****-**** (Recent: Boss)",
-        "Social Media: Logged in on LINE, Twitter (X), Facebook",
-        "Location Tracking: Frequent visits to Shinjuku, Akihabara, and Odaiba",
-        "VPN Status: OFF (IP visible)",
-        "Recent Search Terms: “how to erase browsing history,” “Bitcoin exchange Japan”",
-        "Recent Photos: Last photo taken near Tokyo Tower",
-        "Cloud Services: iCloud, Google Drive (Recent upload: 'Tax documents.pdf')",
-        "Streaming Accounts: Netflix Japan, Hulu Japan, Amazon Prime Video",
-        "Recent Transactions: ¥8,200 at FamilyMart, ¥12,500 at Uniqlo Ginza",
-        "Wi-Fi Networks Connected: 'Home_WiFi_5G', 'Cafe_Free_WiFi'",
-        "Bluetooth Devices: Apple Watch, AirPods, Car Bluetooth"
-    　　 "IP Address: 203.***.***.58",
+    "IP Address: 203.***.***.58",
         "Location: Japan",
         "Device: iPhone (iOS)",
         "Username: ****",
@@ -180,25 +174,24 @@
             messageElement.scrollTop = messageElement.scrollHeight; // Auto-scroll to the bottom
             setTimeout(() => showScrollingMessages(index + 1), 20); // High speed: 20ms interval
         } else {
-            showHackerMessage();
+            showHackerPopup();
         }
     }
 
-    // Function to display hacker message
-    function showHackerMessage() {
-        const hackerMessage = document.getElementById("hacker-message");
-        hackerMessage.style.display = "block";
-        setTimeout(clearScreenAndShowFinalMessage, 1000); // Short delay for effect
+    // Function to display hacker message as a pop-up
+    function showHackerPopup() {
+        const hackerPopup = document.getElementById("hacker-popup");
+        hackerPopup.style.visibility = "visible";
+        hackerPopup.style.opacity = "1";
+        setTimeout(clearScreenAndShowFinalMessage, 2000); // Short delay for effect
     }
 
     // Function to clear the screen and show the final message
     function clearScreenAndShowFinalMessage() {
         document.body.innerHTML = ""; // Clear all previous content
         const finalMessage = document.createElement("p");
-        finalMessage.textContent = "In June 2025, Rio will become a big sister.";
-        finalMessage.style.fontSize = "24px";
-        finalMessage.style.color = "#0f0";
-        finalMessage.style.textAlign = "center";
+        finalMessage.textContent = "2025年6月に莉緒がお姉ちゃんになります。";
+        finalMessage.id = "final-message";
         document.body.appendChild(finalMessage);
     }
 
