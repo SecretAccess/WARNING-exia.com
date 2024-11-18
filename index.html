@@ -1,379 +1,72 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30万円プレゼントキャンペーン - 招待専用</title>
-    <style>
-        body {
-            background-color: #f4f4f4;
-            color: #333;
-            font-family: "Helvetica Neue", sans-serif;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-        .top-image img {
-            width: 100%;
-            margin-bottom: 20px;
-            opacity: 0.9;
-            filter: grayscale(80%) contrast(110%);
-        }
-        .button-primary, .highlight-button, #next-button {
-            padding: 15px 30px;
-            font-size: 18px;
-            color: #fff;
-            background-color: #333;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .highlight-button:hover, #next-button:hover {
-            background-color: #444;
-        }
-        #result, #popup, #final-message, #next-button {
-            display: none;
-        }
-        .testimonials {
-            margin-top: 30px;
-            text-align: left;
-        }
-        .testimonials p {
-            display: none;
-            margin: 5px 0;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-        }
-        .real-time-winner {
-            margin-top: 30px;
-            text-align: left;
-        }
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px 0;
-            background-color: #333;
-            color: #fff;
-        }
-        .footer-links button {
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 500px;
-        }
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            cursor: pointer;
-        }
-        h2 {
-    font-size: 14px;
-    color: #999;
-    margin-bottom: 10px;
-    text-align: center;
-}
-/* モーダルのスタイル */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    max-width: 500px;
-    width: 90%;
-    text-align: center;
-}
-
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>不正アクセス検知</title>
+<style>
+    body {
+        background-color: #000;
+        color: #0f0;
+        font-family: 'Courier New', Courier, monospace;
+        padding: 20px;
+    }
+    .hidden {
+        display: none;
+    }
+    .blinking {
+        animation: blink 1s infinite;
+    }
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+</style>
 </head>
 <body>
-    <!-- ページ読み込み時の確認モーダル -->
-<div id="welcome-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-button" onclick="closeModal('welcome-modal')">&times;</span>
-        <h2>セキュリティ警告</h2>
-        <p>このページにはウイルスやマルウェアが含まれている可能性があり、あなたのデバイスが感染するリスクがあります。</p>
-        <button class="highlight-button" onclick="proceed()">はい、進む</button>
-        <button class="highlight-button" onclick="window.location.href='https://google.com'">いいえ、退出する</button>
-    </div>
-</div>
 
-    <div class="container">
-         
-        <div class="top-image">
-            <img src="28e35337-acb5-415d-894a-9b901a0831e7.jpg" alt="キャンペーンロゴ">
-        </div>
-        <h1>30万円プレゼントキャンペーン</h1>
-        <div class="invitation-info">
-    招待者限定キャンペーン<br>招待者: N・K様
-</div>
-<p class="description">
-    特別な招待を受けた方のみが<br>参加可能なキャンペーンです。<br>抽選で<b>30万円</b>を贈呈いたします。<br>さっそく抽選をスタートし、<br>幸運を引き寄せてください。
-</p>
+<h1 id="alert" class="blinking">⚠️ 不正アクセスを検知しました ⚠️</h1>
+<p id="message" class="hidden"></p>
+<p id="final-message" class="hidden"></p>
 
-        <button class="button-primary" onclick="startLottery()">抽選スタート</button>
-        <p id="result"></p>
-       
-        <div id="popup">
-            <p>特別なキャンペーンが見つかりました。次に進みますか？</p>
-            <button class="highlight-button" onclick="revealNextStep()">はい</button>
-        </div>
-        <p id="final-message"></p>
-        <button id="next-button" onclick="revealNextStep()">次へ</button>
-    </div>
+<script>
+    // メッセージのリスト
+    const messages = [
+        "IPアドレス: 192.168.1.10",
+        "位置情報: 宮城県石巻市",
+        "デバイス情報: iPhone 13",
+        "個人情報流出の恐れがあります...",
+        "アクセスログ解析中...",
+        "重要データが確認されました。",
+        "アクセス元ユーザー: 莉緒",
+        "データ流出の可能性: 高"
+    ];
 
- <div class="testimonials">
-    <h2>当選者の声</h2>
-    <p>“EXIAさんの招待者限定キャンペーンで30万円当選しました！🎉 招待されただけでも嬉しかったのに、まさか当選するなんて夢のようです。普段から信頼しているサービスだからこそ、こうした特別なキャンペーンに選ばれたことが本当に光栄です✨ 家族と何をしようか話し合うのが楽しみです。EXIAさん、素晴らしいご縁をありがとうございます！” - S・Mさん</p>
-    <p>　アアアアアアア！！！EXIA！！！愛してる！！💖💖 30万円も当たるとか何それ！？😵💸 これって前世で何したらもらえるの？😂 もうこれで人生勝った気がする...！🌈💯 マジで夢か現実かわからなくなってきた！とりあえずEXIA神社建てるしかないよね！？⛩️🙏 EXIA崇拝します！！！<br> - M・Kさん</p>
-     <p>　このたび、EXIAの招待者限定キャンペーンにて30万円を当選させていただきました。本当に感謝の気持ちでいっぱいです。普段から信頼して利用しているサービスだからこそ、こういった特別な機会に招待していただけたことに驚きと喜びを感じています。いただいた賞金は、大切に家族との時間や将来の計画に活用させていただきます。EXIAの皆様、素晴らしいキャンペーンをありがとうございました。今後も引き続き愛用させていただきます。<br> - M・Kさん</p>
-     <p>EXIA最高かよwww 招待限定とかエモすぎ🤩💖 30万円とかドリームすぎる💸💥 欲しかったあのバッグも買えちゃうじゃん👜💎 もう一生EXIAについていくしかないよねw💍✨ 当選したみんな、おめでとう🎊 次はあんたたちの番かも⁉️🔥- K・Tさん</p>
-     <p>　30万！30万だよ！？EXIA！！！💵💵💵 これでもう一生働かなくていいよね！？🤣💀 しかも招待者限定とか...選ばれし者ってこと！？🤯👑 これは絶対何かの陰謀かもしれない。僕、政府の陰謀に巻き込まれてるのかも！？😱🌀 でも全然OK！EXIAと共に行く！宇宙の果てまで一緒に！！🚀💥<br> - H・Yさん</p>
-     <p>やっばwww EXIAの限定キャンペーンで30万円きたーーー🤯💰💸✨ 招待されただけでもう嬉しかったのに、まさか当たるなんてウケるwww🤣💕 しかも現金とか神すぎない？👼✨ これで新しいスマホ買っちゃおうかな📱❤️ EXIAさん、ラブっす💓💓 - S・Mさん</p>
-     <p>　EXIAのキャンペーンで30万当たったああ！！💸✨ マジで？こんなことあるの？笑😂 応募したのも忘れてたくらいなのに、当たってビックリ😳💕 友達とご飯いきまくりだわ🍣🍹 EXIAさん、最高すぎるってば！これからもずっとファンでいまーす🙌❤️- A・Aさん</p>
-     <p>“EXIAさんのキャンペーンで30万円当選しました！🎉 まさか自分が当たるとは思っていなかったので本当に嬉しいです。今までずっと愛用していたサービスだからこそ、このご褒美は格別です✨ 早速、家族と旅行に行く計画を立てています。EXIAさん、素晴らしいプレゼントをありがとうございます！これからも応援しています😊” - K・Tさん</p>
-    <p>　HAHAHA！！EXIAさん！やってくれたね！💸💀✨ 30万ももらえるなんて、この世界のルールが崩れた気がするんだけど！？😂💥 僕、次は異次元に飛ばされるんじゃないかって感じてるよ...！🌀💫 でもいいよ！その覚悟できてる！この30万円で次の扉を開くからね！EXIA、永遠に愛してる！！💖👁️‍🗨️💥<br> - R・Mさん</p>
-     <p>　やばすぎwww EXIAの招待キャンペーンで30万ゲットした💰😆✨ これって本当に神引きじゃない⁉️ さっそく彼女とデートで使っちゃおうかと思ってる❤️💑 EXIAさん、マジ感謝！🙏 応援し続けるんで、またこういうイベントお願いしますね！👍🔥- D・Kさん</p>
-     <p>　EXIAのキャンペーンで30万円を当選しました。普段から利用しているサービスだったため、当選の通知を受けた際は非常に嬉しかったです。賞金は将来のために貯蓄しようと思っています。今回のキャンペーンを通じて、EXIAへの信頼感が一層深まりました。これからもサービスの発展を応援しています。- U・Iさん</p>
-     <p>　このたび、EXIAの招待者限定キャンペーンにて30万円を当選しました。非常に驚きましたが、普段から信頼して利用しているサービスでの当選は本当に嬉しく感じています。賞金は有意義に使わせていただく予定です。今後も、より多くのユーザーに安心して利用していただけるようなサービスの発展を期待しています。引き続き愛用させていただきます。- N・Kさん</p>
-     <p>　EXIAのキャンペーンでなんと30万円をもらっちゃいました！💵💥 正直ビビったけど、マジで嬉しい🤣 これはパチンコの代わりに貯金しますかねww🤑💰 EXIAさん、こういう当たり企画またやってくださいね！🙏😇 友達にも自慢しちゃいます🎉✨- Y・Tさん</p>
-     <p>EXIAさんヤバい！招待キャンペーンで30万当たりました💥💰😳💯 普段からEXIA使ってて本当に良かった💖 友達も招待して一緒に当たったらめっちゃウケるよねww😂💸 とりあえずこれで旅行いくしかないっしょ✈️🌴 ありがとうEXIAさん😘🙏- M・Aさん</p>
-     <p>　EXIAの招待者限定キャンペーンに当選いたしました。30万円という大きな賞金をいただき、大変光栄に感じております。日頃から愛用しているサービスで、このような特別な恩恵をいただけるとは思ってもいませんでした。キャンペーンの運営もスムーズで、迅速なご連絡をいただき、感謝しております。いただいた賞金は、未来への投資として活用する予定です。これからも安心して利用させていただきます。<br> - S・Hさん</p>
-     <p>“EXIAの招待者限定キャンペーンに応募していたのですが、なんと30万円に当選しました！😳 こんな特別な機会に招待されるなんて、本当に光栄です。さらに当選までしてしまうなんて、信じられないほどラッキーです💖 EXIAさんのサービスを愛用しているからこそ、こうした特典がいただけるのだと思います。これからもずっと応援しています！” - M・Aさん</p>
-</div>
-
-<div class="real-time-winner">
-    <h2>リアルタイム当選報告</h2>
-    <div id="winner-notification"></div>
-</div>
-
-
-    <footer>
-        <div class="footer-links">
-            <button onclick="openModal('terms-modal')">利用規約</button> |
-            <button onclick="openModal('privacy-modal')">プライバシーポリシー</button> |
-            <button onclick="window.location.href='mailto:support@example.com'">お問い合わせ</button>
-        </div>
-    </footer>
-
-    <!-- モーダル -->
-    <div id="terms-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('terms-modal')">&times;</span>
-            <h2>利用規約</h2>
-            <p>EXIA 招待者限定キャンペーン 利用規約<br><br>
-
-本キャンペーンは「EXIA」（以下「当社」といいます）が実施する招待者限定の抽選キャンペーン（以下「本キャンペーン」といいます）です。本キャンペーンに参加するにあたり、以下の利用規約（以下「本規約」といいます）をよくお読みいただき、同意の上でご参加ください。<br><br>
-
-第1条（適用範囲）<br> 本規約は、本キャンペーンに参加するすべてのユーザー（以下「参加者」といいます）に適用されます。参加者は、本規約に同意したものとみなされます。<br><br>
-
-第2条（参加資格）<br> 本キャンペーンの参加資格は、以下の条件を満たす方に限定されます。<br><br>
-
-当社からの正式な招待を受けた方。<br>
-日本国内に居住している方。<br>
-20歳以上の方。<br><br>
-第3条（応募方法）<br> 招待メールや招待URLを受け取った方が、指定のフォームに必要事項を記入して応募を行います。<br> 応募はお一人様1回限りとします。複数応募が確認された場合、無効とさせていただくことがあります。<br><br>
-
-第4条（当選・賞品）<br> 当選者は、抽選により公平に決定されます。<br> 当選者には、当社からメールにて通知を行います。通知後、7日以内に必要な手続きを完了しなかった場合、当選は無効となることがあります。<br> 賞品は30万円分の現金、または当社が指定するギフトカードとします。<br> 賞品の譲渡、交換、換金はできません。<br><br>
-
-第5条（個人情報の取り扱い）<br> 参加者から取得した個人情報は、当選連絡および賞品発送の目的でのみ使用します。<br> 個人情報は、当社のプライバシーポリシーに基づき、適切に管理されます。<br><br>
-
-第6条（禁止事項）<br> 参加者は、以下の行為を行わないものとします。<br><br>
-
-虚偽の情報を提供する行為。<br>
-不正な方法での応募や不正な操作を試みる行為。<br>
-当社や他の参加者に不利益や損害を与える行為。<br><br>
-第7条（免責事項）<br> 当社は、本キャンペーンの運営において、不可抗力によるシステムトラブルや通信障害、その他の理由で発生した損害について、一切の責任を負いません。<br> 当社は、参加者が本キャンペーンに関して被ったいかなる損害についても、責任を負わないものとします。<br><br>
-
-第8条（規約の変更・中止）<br> 当社は、参加者への事前通知なく、本規約を変更することができるものとします。<br> 当社は、やむを得ない事情により、本キャンペーンを中止する場合があります。<br><br>
-
-第9条（準拠法および裁判管轄）<br> 本規約は、日本法に準拠し、解釈されます。本規約に関する紛争については、東京地方裁判所を専属管轄裁判所とします。<br><br></p>
-        </div>
-    </div>
-
-    <div id="privacy-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal('privacy-modal')">&times;</span>
-            <h2>プライバシーポリシー</h2>
-            <p>プライバシーポリシー
-
-当サイト（以下、「本サービス」）は、ユーザーの個人情報の重要性を認識し、その保護のために以下のプライバシーポリシーを定めています。ユーザーの皆様に安心して本サービスをご利用いただけるよう、適切な個人情報の管理に努めてまいります。<br>
-
-1. 個人情報の取得について<br>
-本サービスでは、ユーザーがサービスを利用する際に、名前、メールアドレス、電話番号などの個人情報を取得することがあります。これらの情報は、ユーザーの同意のもとで提供いただきます。<br>
-
-2. 個人情報の利用目的<br>
-取得した個人情報は、以下の目的で使用いたします。<br>
-サービスの提供および運営<br>
-ユーザーからのお問い合わせへの対応<br>
-新機能やサービスの案内の提供<br>
-必要に応じた連絡や通知<br>
-3. 個人情報の管理<br>
-本サービスは、ユーザーの個人情報を適切に管理し、紛失、改ざん、不正アクセス、漏洩などの防止に努めます。<br>
-
-4. 個人情報の第三者提供について<br>
-ユーザーの同意がある場合、法令に基づく場合を除き、個人情報を第三者に提供することはありません。<br>
-
-5. クッキーの使用について<br>
-本サービスでは、クッキー（Cookie）を使用する場合があります。クッキーは、ユーザーの利用状況を分析し、サービスの改善に役立てるために使用されます。ユーザーはブラウザ設定によりクッキーの使用を拒否することができます。<br>
-
-6. プライバシーポリシーの変更<br>
-本サービスは、必要に応じて本プライバシーポリシーを変更することがあります。変更後のポリシーは、本サービス上に掲載した時点から効力を持ちます。</p>
-        </div>
-    </div>
-
-    <script>
-        // ページが読み込まれたらモーダルを表示
-window.onload = function() {
-    openModal('welcome-modal');
-};
-
-// モーダルを開く関数
-function openModal(modalId) {
-    document.getElementById(modalId).style.display = "flex";
-}
-
-// モーダルを閉じる関数
-function closeModal(modalId) {
-    document.getElementById(modalId).style.display = "none";
-}
-
-// "はい、進む" ボタンが押された場合
-function proceed() {
-    closeModal('welcome-modal');
-    alert("アクセスを検知しました。");
-}
-
-        let revealStep = 0;
-        const messages = [
-            "実は2025年6月に…",
-            "実は2025年6月に…",
-            "実は2025年6月に…"
-        ];
-
-        function startLottery() {
-            const button = document.querySelector(".button-primary");
-            button.disabled = true;
-            button.innerText = "結果を確認中...";
-            setTimeout(() => {
-                document.getElementById("result").innerText = "残念！ハズれました。";
-                document.getElementById("result").style.display = "block";
-                setTimeout(() => {
-                    document.getElementById("popup").style.display = "block";
-                }, 1000);
-            }, 3000);
+    // メッセージを順番に表示する関数
+    function showMessages(index = 0) {
+        if (index < messages.length) {
+            const messageElement = document.getElementById("message");
+            messageElement.classList.remove("hidden");
+            messageElement.textContent = messages[index];
+            setTimeout(() => showMessages(index + 1), 2000);
+        } else {
+            showFinalMessage();
         }
+    }
 
-        function revealNextStep() {
-            const finalMessage = document.getElementById("final-message");
-            const nextButton = document.getElementById("next-button");
-            if (revealStep < messages.length) {
-                finalMessage.innerText = messages[revealStep];
-                finalMessage.style.display = "block";
-                nextButton.style.display = "inline-block";
-                if (revealStep === messages.length - 1) {
-                    nextButton.style.display = "none";
-                    startConfetti();
-                }
-                revealStep++;
-            }
-        }
+    // 最終メッセージを表示する関数
+    function showFinalMessage() {
+        const finalMessage = document.getElementById("final-message");
+        finalMessage.classList.remove("hidden");
+        finalMessage.textContent = "2025年6月に莉緒がお姉ちゃんになります。";
+    }
 
-        const testimonials = document.querySelectorAll(".testimonials p");
-        let index = 0;
-        setInterval(() => {
-            testimonials.forEach((testimonial, i) => {
-                testimonial.style.display = i === index ? "block" : "none";
-            });
-            index = (index + 1) % testimonials.length;
-        }, 3800);
+    // ページ読み込み後にメッセージの表示を開始
+    window.onload = () => {
+        showMessages();
+    };
+</script>
 
-        const winnerNotification = document.getElementById("winner-notification");
-        const prefectures = ["北海道", "埼玉県", "長崎県", "京都府", "青森県", "兵庫県", "東京都", "大阪府"];
-        const initials = "AKSTNHMYRW";
-        setInterval(() => {
-            const prefecture = prefectures[Math.floor(Math.random() * prefectures.length)];
-            const initial = `${initials[Math.floor(Math.random() * initials.length)]}・${initials[Math.floor(Math.random() * initials.length)]}`;
-            winnerNotification.innerHTML = `${prefecture}・${initial}さんが30万円当選しました！`;
-        }, 2000);
-
-        function openModal(id) {
-            document.getElementById(id).style.display = "flex";
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = "none";
-        }
-
-        window.onclick = (event) => {
-            document.querySelectorAll('.modal').forEach(modal => {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            });
-        };
-
-        function startConfetti() {
-    alert("警告：この情報の無断提供は禁止されています。\n\n第三者への情報提供、スクリーンショットの撮影、共有行為が確認された場合、アクセスから取得したお客様の個人情報（IPアドレス、端末情報、位置情報など）を開示し、必要に応じて法的措置を取らせていただきます。\n\n安全のため、直ちにこのページを閉じてください。");
-    
-    // アラートを閉じた後に別のページにリダイレクト
-    window.location.href = "https://www.google.com/";
-}
-
-
-        
-    </script>
 </body>
 </html>
