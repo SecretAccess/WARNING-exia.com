@@ -10,9 +10,7 @@
         color: #0f0;
         font-family: 'Courier New', Courier, monospace;
         padding: 20px;
-    }
-    .hidden {
-        display: none;
+        overflow: hidden;
     }
     .blinking {
         animation: blink 1s infinite;
@@ -22,49 +20,77 @@
         50% { opacity: 0; }
         100% { opacity: 1; }
     }
+    #message, #final-message {
+        white-space: pre-wrap;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    #hacker-message {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 50px;
+        display: none;
+    }
 </style>
 </head>
 <body>
 
-<h1 id="alert" class="blinking">⚠️ 不正アクセスを検知しました ⚠️</h1>
-<p id="message" class="hidden"></p>
+<h1 id="alert" class="blinking">あなたのデバイスがハッキングされています </h1>
+<p id="message"></p>
+<p id="hacker-message">ハッカーよりメッセージが届きました。</p>
 <p id="final-message" class="hidden"></p>
 
 <script>
-    // メッセージのリスト
-    const messages = [
-        "IPアドレス: 192.168.1.10",
-        "位置情報: 宮城県石巻市",
-        "デバイス情報: iPhone 13",
-        "個人情報流出の恐れがあります...",
-        "アクセスログ解析中...",
-        "重要データが確認されました。",
-        "アクセス元ユーザー: 莉緒",
+    // 個人情報風メッセージのリスト（伏字対応）
+    const personalDataMessages = [
+        "IPアドレス: 192.***.***.10",
+        "位置情報: 宮城県●●市付近",
+        "デバイス情報: iPhone 13, iOS 17.0.1",
+        "ユーザー名: R***_K***",
+        "メールアドレス: r***@example.com",
+        "最近のアクセス履歴: https://b***k.example.com",
+        "保存パスワード: ********",
+        "クレジットカード番号: ****-****-****-1234",
+        "通話履歴: 昨日 15:34 通話先: 080-****-5678",
+        "写真フォルダ: 家族写真 (最近の追加: ●●ちゃんの誕生日)",
+        "SNSログイン情報: Facebook, Instagram, LINE",
+        "位置履歴: 自宅付近からのアクセス多発",
+        "アクセス元ユーザー: ●●",
         "データ流出の可能性: 高"
     ];
 
-    // メッセージを順番に表示する関数
-    function showMessages(index = 0) {
-        if (index < messages.length) {
+    // 最終メッセージ
+    const finalMessageText = "2025年6月に莉緒がお姉ちゃんになります。";
+
+    // 個人情報メッセージを画面に流す関数
+    function showScrollingMessages(index = 0) {
+        if (index < personalDataMessages.length) {
             const messageElement = document.getElementById("message");
-            messageElement.classList.remove("hidden");
-            messageElement.textContent = messages[index];
-            setTimeout(() => showMessages(index + 1), 2000);
+            messageElement.textContent += personalDataMessages[index] + "\n";
+            messageElement.scrollTop = messageElement.scrollHeight; // スクロールを一番下に
+            setTimeout(() => showScrollingMessages(index + 1), 500);
         } else {
-            showFinalMessage();
+            showHackerMessage();
         }
+    }
+
+    // ハッカーからのメッセージを表示する関数
+    function showHackerMessage() {
+        const hackerMessage = document.getElementById("hacker-message");
+        hackerMessage.style.display = "block";
+        setTimeout(showFinalMessage, 3000);
     }
 
     // 最終メッセージを表示する関数
     function showFinalMessage() {
         const finalMessage = document.getElementById("final-message");
         finalMessage.classList.remove("hidden");
-        finalMessage.textContent = "2025年6月に莉緒がお姉ちゃんになります。";
+        finalMessage.textContent = finalMessageText;
     }
 
     // ページ読み込み後にメッセージの表示を開始
     window.onload = () => {
-        showMessages();
+        showScrollingMessages();
     };
 </script>
 
