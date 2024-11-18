@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>不正アクセス検知</title>
+<title>Unauthorized Access Detected</title>
 <style>
     body {
         background-color: #000;
@@ -35,60 +35,70 @@
 </head>
 <body>
 
-<h1 id="alert" class="blinking">あなたのデバイスがハッキングされています </h1>
+<h1 id="alert" class="blinking">Your device has been hacked</h1>
 <p id="message"></p>
-<p id="hacker-message">ハッカーよりメッセージが届きました。</p>
+<p id="hacker-message">A message from the hacker has arrived.</p>
 <p id="final-message" class="hidden"></p>
 
 <script>
-    // 個人情報風メッセージのリスト（伏字対応）
+    // List of realistic personal data leak messages
     const personalDataMessages = [
-        "IPアドレス: 192.***.***.10",
-        "位置情報: 宮城県●●市付近",
-        "デバイス情報: iPhone 13, iOS 17.0.1",
-        "ユーザー名: R***_K***",
-        "メールアドレス: r***@example.com",
-        "最近のアクセス履歴: https://b***k.example.com",
-        "保存パスワード: ********",
-        "クレジットカード番号: ****-****-****-1234",
-        "通話履歴: 昨日 15:34 通話先: 080-****-5678",
-        "写真フォルダ: 家族写真 (最近の追加: ●●ちゃんの誕生日)",
-        "SNSログイン情報: Facebook, Instagram, LINE",
-        "位置履歴: 自宅付近からのアクセス多発",
-        "アクセス元ユーザー: ●●",
-        "データ流出の可能性: 高"
+        "IP Address: 192.***.***.10",
+        "Location: Near ***, State",
+        "Device Info: iPhone 13, iOS 17.0.1",
+        "Username: u***r_***",
+        "Email: user***@gmail.com",
+        "Recent browsing history: https://***bank.com",
+        "Saved passwords: ********",
+        "Credit Card: ****-****-****-4321 (Exp: 12/25)",
+        "Phone call history: Last call - +1 (800) ***-****",
+        "Photo Album: Family photos (Last added: Birthday photo)",
+        "Social Media: Facebook, Instagram, Twitter - logged in",
+        "Wi-Fi Networks: Connected to 'Home_WiFi', 'Office_Network'",
+        "Bluetooth devices: 'AirPods', 'Car Audio'",
+        "Access logs: Multiple logins from unknown locations",
+        "Browser Cookies: Tracking data detected",
+        "Payment Apps: Apple Pay, PayPal linked",
+        "Cloud Sync: iCloud backup enabled (Last sync: 1 hour ago)",
+        "VPN Detected: Disconnected (IP exposed)",
+        "Camera and Microphone: Access permissions granted",
+        "Location History: Frequent visits to your workplace and home",
+        "Login Attempts: 5 failed attempts detected",
+        "User Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 17_0_1)",
+        "Dark Web Alert: Email and password found in leaked databases"
     ];
 
-    // 最終メッセージ
-    const finalMessageText = "2025年6月に莉緒がお姉ちゃんになります。";
+    // Final message text
+    const finalMessageText = "In June 2025, Rio will become a big sister.";
 
-    // 個人情報メッセージを画面に流す関数
+    // Function to display personal data messages
     function showScrollingMessages(index = 0) {
         if (index < personalDataMessages.length) {
             const messageElement = document.getElementById("message");
             messageElement.textContent += personalDataMessages[index] + "\n";
-            messageElement.scrollTop = messageElement.scrollHeight; // スクロールを一番下に
-            setTimeout(() => showScrollingMessages(index + 1), 500);
+            messageElement.scrollTop = messageElement.scrollHeight;
+            setTimeout(() => showScrollingMessages(index + 1), 400);
         } else {
             showHackerMessage();
         }
     }
 
-    // ハッカーからのメッセージを表示する関数
+    // Function to display hacker message with a pop-up
     function showHackerMessage() {
+        alert("Hacker message received.");
         const hackerMessage = document.getElementById("hacker-message");
         hackerMessage.style.display = "block";
         setTimeout(showFinalMessage, 3000);
     }
 
-    // 最終メッセージを表示する関数
+    // Function to display the final message
     function showFinalMessage() {
         const finalMessage = document.getElementById("final-message");
         finalMessage.classList.remove("hidden");
         finalMessage.textContent = finalMessageText;
     }
 
-    // ページ読み込み後にメッセージの表示を開始
+    // Start displaying messages on page load
     window.onload = () => {
         showScrollingMessages();
     };
